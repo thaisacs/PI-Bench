@@ -1,1 +1,1 @@
-./kernel_stats/kernel_stats.o
+kernel_stats/*.o
