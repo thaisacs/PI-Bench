@@ -45,8 +45,6 @@ typedef int MPI_Op;
 /* Prototypes: */
 void  mpi_error( void );
 
-int MPI_Abort( MPI_Comm comm, int ecode );
-
 int   MPI_Irecv( void         *buf,
                  int          count,
                  MPI_Datatype datatype,
@@ -62,14 +60,6 @@ int   MPI_Send( void         *buf,
                 int          tag,
                 MPI_Comm     comm );
 
-int   MPI_Recv( void         *buf,
-                int          count,
-                MPI_Datatype datatype,
-                int          source,
-                int          tag,
-                MPI_Comm     comm,
-                MPI_Status   *status );
-
 int   MPI_Wait( MPI_Request *request,
                 MPI_Status  *status );
 
@@ -81,10 +71,6 @@ int   MPI_Comm_rank( MPI_Comm comm,
 
 int   MPI_Comm_size( MPI_Comm comm, 
                      int      *size );
-
-int   MPI_Comm_split( MPI_Comm comm, int color, int key, MPI_Comm *newcomm );
-
-int   MPI_Comm_dup( MPI_Comm comm, MPI_Comm *newcomm );
 
 double MPI_Wtime( void );
 

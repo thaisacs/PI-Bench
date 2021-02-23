@@ -12,12 +12,12 @@ include ../sys/make.common
 ${PROGRAM}: config ${OBJS}
 	${FLINK} ${FLINKFLAGS} -o ${PROGRAM} ${OBJS} ${FMPI_LIB}
 
-.f90.o:
+.f.o:
 	${FCOMPILE} $<
 
-ep.o:		ep.f90 ep_data.o mpinpb.o
-ep_data.o:	ep_data.f90 npbparams.h
-mpinpb.o:	mpinpb.f90
+ep.o:		ep.f ep_data.o mpinpb.o
+ep_data.o:	ep_data.f npbparams.h
+mpinpb.o:	mpinpb.f
 
 clean:
 	- rm -f *.o *~ *.mod

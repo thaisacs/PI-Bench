@@ -1,4 +1,4 @@
-Some explanations on the MPI implementation of NPB 3.4.1 (NPB3.4-MPI)
+Some explanations on the MPI implementation of NPB 3.4 (NPB3.4-MPI)
 ----------------------------------------------------------------------
 
 NPB-MPI is a sample MPI implementation based on NPB2.4 and NPB3.0-SER.
@@ -61,11 +61,11 @@ program will fail. For classes C and D the disk space required is
          <type>            is "full", "simple", "fortran", or "epio"
 
    Three parameters not used in the original BT benchmark are present in
-   the I/O benchmark. Two are set by default in the file BT/bt.f90. 
+   the I/O benchmark. Two are set by default in the file BT/bt.f. 
    Changing them is optional.
    One is set in make.def. It must be specified.
 
-   bt.f90: collbuf_nodes: number of processes used to buffer data before
+   bt.f: collbuf_nodes: number of processes used to buffer data before
                         writing to file in the collective buffering mode
                         (<type> is "full").
          collbuf_size:  size of buffer (in bytes) per process used in
@@ -123,7 +123,7 @@ program will fail. For classes C and D the disk space required is
    the following requirements:
    
    randi8:
-     1. Uses integer(8) arithmetic. Compiler must support integer(8)
+     1. Uses integer*8 arithmetic. Compiler must support integer*8
      2. Uses the Fortran 90 IAND intrinsic. Compiler must support IAND.
      3. Assumes overflow bits are discarded by the hardware. In particular, 
         that the lowest 46 bits of a*b are always correct, even if the 
@@ -133,13 +133,13 @@ program will fail. For classes C and D the disk space required is
    alternatives:
    
    randi8_safe
-     1. Uses integer(8) arithmetic
+     1. Uses integer*8 arithmetic
      2. Uses the Fortran 90 IBITS intrinsic. 
      3. Does not make any assumptions about overflow. Should always
-        work correctly if compiler supports integer(8) and IBITS. 
+        work correctly if compiler supports integer*8 and IBITS. 
    
    randdp
-     1. Uses double precision arithmetic (to simulate integer(8) operations). 
+     1. Uses double precision arithmetic (to simulate integer*8 operations). 
         Should work with any system with support for 64-bit floating
         point arithmetic.      
    
@@ -159,26 +159,9 @@ program will fail. For classes C and D the disk space required is
 
       % mpiexec -np 16 bin/bt.C.x
 
-   Different benchmark has different requirement for process count,
-   as listed below:
-
-      BT, SP         - a square number of processes (1, 4, 9, ...)
-      LU             - 2D (n1 * n2) process grid where n1/2 <= n2 <= n1
-      CG, FT, IS, MG - a power-of-two number of processes (1, 2, 4, ...)
-      EP, DT         - no special requirement
-
-   The required process count is checked at runtime. By default, a run
-   will abort if the process count requirement is not met.  However,
-   if the environment variable NPB_NPROCS_STRICT is set to one of:
-
-      0, off, no, false
-
-   the run will continue using the largest possible process count that
-   does not exceed the requested process count.  Any excessed ranks
-   will be marked as inactive with a warning message.
-
-   For IS and DT, there is a minimal process count for a given class
-   of problem size.
+   The BT and SP benchmarks require a square number of processes (1, 4,
+   9, ...), whereas most of the other benchmarks require a power-of-two
+   number of processes (1, 2, 4, 8, ...).
 
    When any of the I/O benchmarks is run (non-empty subtype), one or 
    more output files are created, and placed in the directory from which
@@ -188,7 +171,7 @@ program will fail. For classes C and D the disk space required is
    To enable additional timers in several benchmarks at runtime, set
    the environment variable NPB_TIMER_FLAG to one of:
 
-      1, on, yes, true
+       1, on, yes, true
 
    before executing a benchmark.  The previous method of creating a dummy 
    file "timer.flag" in the working directory to enable timers is still 

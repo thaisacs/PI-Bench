@@ -21,22 +21,19 @@ config:
 	../sys/setparams ${BENCHMARK} ${CLASS} ${SUBTYPE}
 
 COMMON=../common
-${COMMON}/${RAND}.o: ${COMMON}/${RAND}.f90
-	cd ${COMMON}; ${FCOMPILE} ${RAND}.f90
+${COMMON}/${RAND}.o: ${COMMON}/${RAND}.f
+	cd ${COMMON}; ${FCOMPILE} ${RAND}.f
 ${COMMON}/c_randdp.o: ${COMMON}/randdp.c
 	cd ${COMMON}; ${CCOMPILE} -o c_randdp.o randdp.c
 
-${COMMON}/get_active_nprocs.o: ${COMMON}/get_active_nprocs.f90
-	cd ${COMMON}; ${FCOMPILE} get_active_nprocs.f90
-
-${COMMON}/print_results.o: ${COMMON}/print_results.f90
-	cd ${COMMON}; ${FCOMPILE} print_results.f90
+${COMMON}/print_results.o: ${COMMON}/print_results.f
+	cd ${COMMON}; ${FCOMPILE} print_results.f
 
 ${COMMON}/c_print_results.o: ${COMMON}/c_print_results.c
 	cd ${COMMON}; ${CCOMPILE} c_print_results.c
 
-${COMMON}/timers.o: ${COMMON}/timers.f90
-	cd ${COMMON}; ${FCOMPILE} timers.f90
+${COMMON}/timers.o: ${COMMON}/timers.f
+	cd ${COMMON}; ${FCOMPILE} timers.f
 
 ${COMMON}/c_timers.o: ${COMMON}/c_timers.c
 	cd ${COMMON}; ${CCOMPILE} c_timers.c
@@ -53,6 +50,4 @@ npbparams.h: ../config/make.def
 ${BENCHMARK}:  default
 ${BENCHMARKU}: default
 
-.SUFFIXES:
-.SUFFIXES: .c .h .f90 .f .o
 

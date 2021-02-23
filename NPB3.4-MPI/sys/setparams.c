@@ -45,17 +45,17 @@
  * won't accidentally change it. 
  */
 
-#define VERSION "3.4.1"
+#define VERSION "3.4"
 
 /* controls verbose output from setparams */
 /* #define VERBOSE */
 
 #define FILENAME "npbparams.h"
-#define DESC_LINE "! CLASS = %c\n"
-#define BT_DESC_LINE "! CLASS = %c SUBTYPE = %s\n"
+#define DESC_LINE "c CLASS = %c\n"
+#define BT_DESC_LINE "c CLASS = %c SUBTYPE = %s\n"
 #define DEF_CLASS_LINE     "#define CLASS '%c'\n"
 #define FINDENT  "        "
-#define CONTINUE "     & "
+#define CONTINUE "     > "
 
 #ifdef FORTRAN_REC_SIZE
 int fortran_rec_size = FORTRAN_REC_SIZE;
@@ -352,12 +352,12 @@ void write_info(int type, char class, int subtype)
 	  }
           /* Print out a warning so bozos don't mess with the file */
           fprintf(fp, "\
-!  \n\
-!  \n\
-!  This file is generated automatically by the setparams utility.\n\
-!  It sets the number of processors and the class of the NPB\n\
-!  in this directory. Do not modify it by hand.\n\
-!  \n");
+c  \n\
+c  \n\
+c  This file is generated automatically by the setparams utility.\n\
+c  It sets the number of processors and the class of the NPB\n\
+c  in this directory. Do not modify it by hand.\n\
+c  \n");
 
           break;
 	
@@ -371,12 +371,12 @@ void write_info(int type, char class, int subtype)
           fprintf(fp, DESC_LINE, class);
           /* Print out a warning so bozos don't mess with the file */
           fprintf(fp, "\
-!  \n\
-!  \n\
-!  This file is generated automatically by the setparams utility.\n\
-!  It sets the number of processors and the class of the NPB\n\
-!  in this directory. Do not modify it by hand.\n\
-!  \n");
+c  \n\
+c  \n\
+c  This file is generated automatically by the setparams utility.\n\
+c  It sets the number of processors and the class of the NPB\n\
+c  in this directory. Do not modify it by hand.\n\
+c  \n");
 
           break;
       case IS:
@@ -543,12 +543,12 @@ void write_lu_info(FILE *fp, char class)
   }
   inorm = itmax;
 
-  fprintf(fp, "\n! full problem size\n");
+  fprintf(fp, "\nc full problem size\n");
   fprintf(fp, "%sinteger isiz01, isiz02, isiz03\n", FINDENT);
   fprintf(fp, "%sparameter (isiz01=%d, isiz02=%d, isiz03=%d)\n", 
 	  FINDENT, problem_size, problem_size, problem_size);
 
-  fprintf(fp, "\n! number of iterations and how often to print the norm\n");
+  fprintf(fp, "\nc number of iterations and how often to print the norm\n");
   fprintf(fp, "%sinteger itmax_default, inorm_default\n", FINDENT);
   fprintf(fp, "%sparameter (itmax_default=%d, inorm_default=%d)\n", 
 	  FINDENT, itmax, inorm);
@@ -665,10 +665,10 @@ void write_cg_info(FILE *fp, char class)
   }
   fprintf( fp, "%sinteger            na, nonzer, niter\n", FINDENT );
   fprintf( fp, "%sdouble precision   shift, rcond\n", FINDENT );
-  fprintf( fp, "%sparameter(  na=%d, &\n", FINDENT, na );
-  fprintf( fp, "%s             nonzer=%d, &\n", CONTINUE, nonzer );
-  fprintf( fp, "%s             niter=%d, &\n", CONTINUE, niter );
-  fprintf( fp, "%s             shift=%s, &\n", CONTINUE, shift );
+  fprintf( fp, "%sparameter(  na=%d,\n", FINDENT, na );
+  fprintf( fp, "%s             nonzer=%d,\n", CONTINUE, nonzer );
+  fprintf( fp, "%s             niter=%d,\n", CONTINUE, niter );
+  fprintf( fp, "%s             shift=%s,\n", CONTINUE, shift );
   fprintf( fp, "%s             rcond=%s )\n", CONTINUE, rcond );
 }
 
@@ -1018,7 +1018,7 @@ void put_string(FILE *fp, char *name, char *val)
   nlines = len/LINELEN;
   if (nlines*LINELEN < len) nlines++;
   fprintf(fp, "%scharacter*%d %s\n", FINDENT, nlines*LINELEN, name);
-  fprintf(fp, "%sparameter (%s = &\n", FINDENT, name);
+  fprintf(fp, "%sparameter (%s = \n", FINDENT, name);
   for (i = 0; i < nlines; i++) {
     pos = i*LINELEN;
     if (i == 0) fprintf(fp, "%s\'", CONTINUE);
@@ -1026,7 +1026,7 @@ void put_string(FILE *fp, char *name, char *val)
     /* number should be same as LINELEN */
     fprintf(fp, "%.65s", val+pos);
     if (i == nlines-1) fprintf(fp, "\')\n");
-    else             fprintf(fp, " &\n");
+    else             fprintf(fp, "\n");
   }
 }
 
