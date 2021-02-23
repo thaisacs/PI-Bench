@@ -1,3 +1,6 @@
 [submodule "ECP-Proxy-Apps"]
 	path = ECP-Proxy-Apps
 	url = https://github.com/thaisacs/ECP-Proxy-Apps
+[submodule "LLNL"]
+	path = LLNL
+	url = git@github.com:thaisacs/LLNL.git
