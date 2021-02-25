@@ -19,19 +19,19 @@ void print_timestep(uint8_t type, double collected_time) {
 
   switch(type) {
     case PRINT_INIT:
-      printf("[MO833] Init time,%i,%f\n", rank, collected_time - init_time);
+      printf("[PI-INFO] Init time,%i,%f\n", rank, collected_time - init_time);
       break;
     case PRINT_STATS:
-      printf("[MO833] Paramount Iteration,%i,%i,%f,%f\n", rank, current_iteration, collected_time - init_time, pi);
+      printf("[PI-INFO] Paramount Iteration,%i,%i,%f,%f\n", rank, current_iteration, collected_time - init_time, pi);
       break;
     case PRINT_EXIT:
-      printf("[MO833] Total time,%f\n", collected_time - init_time);
+      printf("[PI-INFO] Total time,%f\n", collected_time - init_time);
       break;
     case PRINT_AVG:
-      printf("[MO833] PI avg,%i,%f,%d\n", rank, pi_sum/current_iteration, current_iteration);
+      printf("[PI-INFO] PI avg,%i,%f,%d\n", rank, pi_sum/current_iteration, current_iteration);
       break;
     case PRINT_BETA:
-      printf("[MO833] Beta,%i,%f\n", rank, (collected_time - end_time)/pi_sum);
+      printf("[PI-INFO] Beta,%i,%f\n", rank, (collected_time - end_time)/pi_sum);
   }
 }
 
