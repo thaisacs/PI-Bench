@@ -4,3 +4,6 @@
 [submodule "LLNL"]
 	path = LLNL
 	url = git@github.com:thaisacs/LLNL.git
+[submodule "lammps"]
+	path = lammps
+	url = https://github.com/thaisacs/lammps
