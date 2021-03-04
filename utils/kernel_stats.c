@@ -95,6 +95,7 @@ void exit_timestep_() {
 void my_exit() {
   if(early_stop && current_iteration == stop_in) {
     exit_timestep_();
+    exit(0);
     MPI_Abort(MPI_COMM_WORLD, 0);
   }
 }
